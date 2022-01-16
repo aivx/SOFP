@@ -27,7 +27,7 @@ namespace SOFP
         List<PackageClass> list;
         void getData()
         {
-            dataGridView1.DataSource = StaticMethods.getData("Customers", list);
+            dataGridView1.DataSource = StaticMethods.getTable($"SELECT {StaticMethods.setTables(list)} FROM [Customers]");
         }
 
         private void DataUpdate_GetUpdate()

@@ -10,7 +10,7 @@ namespace SOFP
 {
     public static class StaticMethods
     {
-        public static DataTable getReq(string str)
+        public static DataTable getTable(string str)
         {
             DataTable dt = new DataTable();
             try
@@ -32,7 +32,7 @@ namespace SOFP
         }
 
 
-        public static DataTable getData(string name, List<PackageClass> vs)
+        public static string setTables(List<PackageClass> vs)
         {
             string rows = "";
             bool check = false;
@@ -50,7 +50,7 @@ namespace SOFP
             else
                 rows = "*";
 
-            return getReq($"SELECT {rows} FROM {name}");
+            return rows;
         }
 
 
@@ -74,6 +74,16 @@ namespace SOFP
                     mess = odbcEx.Message;
                 MessageBox.Show(mess);
             }
+        }
+        public static List<string> getIDList(string str)
+        {
+            List<string> idList = new List<string>();
+            DataTable dt = getTable(str);
+            foreach (DataRow row in dt.Rows)
+            {
+                idList.Add(row[0].ToString());
+            }
+            return idList;
         }
 
     }

@@ -1,90 +1,158 @@
-using System;
-using System.Configuration;
+Ôªøusing System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SOFP
 {
     public partial class MainForm : Form
     {
+
         public MainForm()
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
         }
-        
-        private void MainForm_Load(object sender, EventArgs e)
+
+        private void ShowNewForm(object sender, EventArgs e)
         {
             NewConnect nc = new NewConnect();
             nc.MdiParent = this;
             nc.Show();
         }
 
-        private void ÌÓ‚ÓÂœÓ‰ÍÎ˛˜ÂÌËÂToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenFile(object sender, EventArgs e)
         {
-            NewConnect nc = new NewConnect();
-            nc.MdiParent = this;
-            nc.Show();
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            openFileDialog.Filter = "–¢–µ–∫—Å—Ç–æ–≤—ã–µ —Ñ–∞–π–ª—ã (*.txt)|*.txt|–í—Å–µ —Ñ–∞–π–ª—ã (*.*)|*.*";
+            if (openFileDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                string FileName = openFileDialog.FileName;
+            }
         }
 
-        private void ‚˚ıÓ‰ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            saveFileDialog.Filter = "–¢–µ–∫—Å—Ç–æ–≤—ã–µ —Ñ–∞–π–ª—ã (*.txt)|*.txt|–í—Å–µ —Ñ–∞–π–ª—ã (*.*)|*.*";
+            if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                string FileName = saveFileDialog.FileName;
+            }
+        }
+
+
+        private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void LoginUsers_Click(object sender, EventArgs e)
+        private void CutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            LoginUsers w = new LoginUsers();
-            w.MdiParent = this;
-            w.Show();
+            SendKeys.Send("^{x}");
         }
 
-        private void Ò‰ÂÎÍËToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Orders w = new Orders();
-            w.MdiParent = this;
-            w.Show();
+            SendKeys.Send("^{v}");
         }
 
-        private void ÚÓ‚‡˚ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Products w = new Products();
-            w.MdiParent = this;
-            w.Show();
+            SendKeys.Send("^{c}");
         }
 
-        private void ÔÓÍÛÔ‡ÚÂÎËToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ToolBarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Customers w = new Customers();
-            w.MdiParent = this;
-            w.Show();
+            toolStrip.Visible = toolBarToolStripMenuItem.Checked;
         }
 
-        private void Í‡ÒÍ‡‰ÓÏToolStripMenuItem_Click(object sender, EventArgs e)
+        private void StatusBarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            statusStrip.Visible = statusBarToolStripMenuItem.Checked;
+        }
+
+        private void CascadeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LayoutMdi(MdiLayout.Cascade);
         }
 
-        private void ‚ÂÚËÍ‡Î¸ÌÓToolStripMenuItem_Click(object sender, EventArgs e)
+        private void TileVerticalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LayoutMdi(MdiLayout.TileVertical);
         }
 
-        private void „ÓËÁÓÌÚ‡Î¸ÌÓToolStripMenuItem_Click(object sender, EventArgs e)
+        private void TileHorizontalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LayoutMdi(MdiLayout.TileHorizontal);
         }
 
-        private void Ó·ÌÓ‚ËÚ¸ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ArrangeIconsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LayoutMdi(MdiLayout.ArrangeIcons);
+        }
+
+        private void CloseAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (Form childForm in MdiChildren)
+            {
+                childForm.Close();
+            }
+        }
+
+        private void MDIParent1_Load(object sender, EventArgs e)
+        {
+            ShowNewForm(sender, e);
+        }
+
+        private void printPreviewToolStripButton_Click(object sender, EventArgs e)
         {
             DataUpdate.updates();
         }
 
-        private void Á‡Í˚Ú¸¬ÒÂŒÍÌ‡ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void –ø–æ–∫—É–ø–∞—Ç–µ–ª–∏ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CloseAllWindow.close();
+            Customers nc = new Customers();
+            nc.MdiParent = this;
+            nc.Show();
         }
 
+        private void —Å–¥–µ–ª–∫–∏ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Orders nc = new Orders();
+            nc.MdiParent = this;
+            nc.WindowState = FormWindowState.Maximized;
+            nc.Show();
+        }
+
+        private void —Ç–æ–≤–∞—Ä—ãToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Products nc = new Products();
+            nc.MdiParent = this;
+            nc.Show();
+        }
+
+        private void —Å–∏—Å—Ç–µ–º–∞–°–∫–∏–¥–æ–∫ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void –æ—Ç–∫—Ä—ã—Ç—å–í—Å–µ–û–∫–Ω–∞ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            –ø–æ–∫—É–ø–∞—Ç–µ–ª–∏ToolStripMenuItem_Click(sender, e);
+            Orders nc = new Orders();
+            nc.MdiParent = this;
+            nc.Show();
+            —Ç–æ–≤–∞—Ä—ãToolStripMenuItem_Click(sender, e);
+            —Å–∏—Å—Ç–µ–º–∞–°–∫–∏–¥–æ–∫ToolStripMenuItem_Click(sender, e);
+            LayoutMdi(MdiLayout.Cascade);
+        }
     }
 }

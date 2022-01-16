@@ -22,7 +22,7 @@ namespace SOFP
         List<PackageClass> list;
         void getData()
         {
-            dataGridView1.DataSource = StaticMethods.getData("Products", list);
+            dataGridView1.DataSource = StaticMethods.getTable($"SELECT {StaticMethods.setTables(list)} FROM [Products]");
         }
         private void Products_Load(object sender, EventArgs e)
         {

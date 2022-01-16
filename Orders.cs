@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace SOFP
@@ -15,7 +11,6 @@ namespace SOFP
         public Orders()
         {
             InitializeComponent();
-            this.WindowState = FormWindowState.Maximized;
             DataUpdate.GetUpdate += DataUpdate_GetUpdate;
             dataGridView1.DataError += DataGridView1_DataError;
         }
@@ -25,10 +20,9 @@ namespace SOFP
             e.ThrowException = false;
         }
 
-        string nameTable = "Orders";
-        List<PackageClass> list = new List<PackageClass>()
+        List<PackageClass> listTables = new List<PackageClass>()
         {
-            new PackageClass() { Checked = true, name = "ID сделки", ValueDisplayed = "F.ID AS [ID сделки]"},
+            new PackageClass() { Checked = false, name = "ID сделки", ValueDisplayed = "F.ID AS [ID сделки]"},
             new PackageClass() { Checked = true, name = "Псевдоним покупателя", ValueDisplayed = "G.[LName] AS [Псевдоним покупателя]"},
             new PackageClass() { Checked = true, name = "Наименование товара", ValueDisplayed = "A.[Name] AS [Наименование товара]"},
             new PackageClass() { Checked = true, name = "Описание товара", ValueDisplayed = "A.[Description] AS [Описание товара]"},
@@ -55,17 +49,17 @@ namespace SOFP
         {
             
             BindingSource bs = new BindingSource();
-            bs.DataSource = StaticMethods.getData(select_str, list);
+            bs.DataSource = StaticMethods.getTable($"SELECT {StaticMethods.setTables(listTables)} FROM {select_str}");
             dataGridView1.DataSource = bs;
             bindingNavigator1.BindingSource = bs;
             cust.Items.Clear();
             prod.Items.Clear();
-            DataTable dt = StaticMethods.getReq($"SELECT [Nname] FROM [Customers]");
+            DataTable dt = StaticMethods.getTable($"SELECT [Nname] FROM [Customers]");
             foreach (DataRow row in dt.Rows)
             {
                 cust.Items.Add(row[0].ToString());
             }
-            dt = StaticMethods.getReq($"SELECT [Name] FROM [Products]");
+            dt = StaticMethods.getTable($"SELECT [Name] FROM [Products]");
             foreach (DataRow row in dt.Rows)
             {
                 prod.Items.Add(row[0].ToString());
@@ -73,14 +67,14 @@ namespace SOFP
         }
         private void Drivers_Load(object sender, EventArgs e)
         {
-            checkedListBox1.DataSource = list;
+            checkedListBox1.DataSource = listTables;
             checkedListBox1.DisplayMember = "name";
             for (int i = 0; i < checkedListBox1.Items.Count; ++i)
             {
                 checkedListBox1.SetItemChecked(i, ((PackageClass)checkedListBox1.Items[i]).Checked);
             }
             checkedListBox1.ItemCheck += (sender, e) => {
-                list[e.Index].Checked = (e.NewValue != CheckState.Unchecked);
+                listTables[e.Index].Checked = (e.NewValue != CheckState.Unchecked);
             };
             DataUpdate.GetUpdate += DataUpdate_GetUpdate;
             getData();
@@ -94,16 +88,11 @@ namespace SOFP
             }
         }
 
-        private void toolStripButton1_Click(object sender, EventArgs e)
-        {
-            
-        }
-
         private void toolStripButton2_Click_1(object sender, EventArgs e)
         {
-            int id = Convert.ToInt32(dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells[0].Value);
-            StaticMethods.NonQuery($"DELETE FROM {nameTable} WHERE ID={id.ToString()}");
-
+            List<string> idList = StaticMethods.getIDList("SELECT ID FROM [Orders]");
+           // int id = Convert.ToInt32(dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells[0].Value);
+            StaticMethods.NonQuery($"DELETE FROM [Orders] WHERE ID={idList[dataGridView1.CurrentCell.RowIndex]}");
         }
 
         private void toolStripButton4_Click(object sender, EventArgs e)
@@ -112,13 +101,13 @@ namespace SOFP
             {
                 return;
             }
-            DataTable dt = StaticMethods.getReq($"SELECT ID FROM [Customers] WHERE [Nname] LIKE '{cust.SelectedItem.ToString()}' ");
+            DataTable dt = StaticMethods.getTable($"SELECT ID FROM [Customers] WHERE [Nname] LIKE '{cust.SelectedItem.ToString()}' ");
             string c="",p = "";
             foreach (DataRow row in dt.Rows)
             {
                 c = row[0].ToString();
             }
-            dt = StaticMethods.getReq($"SELECT ID FROM [Products] WHERE [Name] LIKE '{prod.SelectedItem.ToString()}' ");
+            dt = StaticMethods.getTable($"SELECT ID FROM [Products] WHERE [Name] LIKE '{prod.SelectedItem.ToString()}' ");
             foreach (DataRow row in dt.Rows)
             {
                 p = row[0].ToString();
@@ -129,17 +118,12 @@ namespace SOFP
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            List<string> lst = new List<string>();
-            DataTable dt = StaticMethods.getReq("SELECT ID FROM[Orders]");
-            foreach (DataRow row in dt.Rows)
-            {
-                lst.Add(row[0].ToString());
-            }
-            
-            dt = StaticMethods.getReq(
+            List<string> idList = StaticMethods.getIDList("SELECT ID FROM [Orders]");
+
+            DataTable dt = StaticMethods.getTable(
                 $"SELECT B.[FName],B.[MName],B.[LName],B.[Nname],B.[Address],B.[Phone]" +
                 $"FROM [Orders] A INNER JOIN [Customers] B ON A.[CustomerID] = B.[ID]" +
-                $"WHERE A.ID={lst[dataGridView1.CurrentCell.RowIndex]}");
+                $"WHERE A.ID={idList[dataGridView1.CurrentCell.RowIndex]}");
                 foreach (DataRow row in dt.Rows)
                 {
                     FName.Text = row[0].ToString();
@@ -153,11 +137,41 @@ namespace SOFP
 
         private void prod_SelectedIndexChanged(object sender, EventArgs e)
         {         
-            DataTable dt = StaticMethods.getReq($"SELECT A.[Count] FROM [Stocks] A INNER JOIN [Products] B ON A.[ProductID] = B.[ID] WHERE B.Name LIKE '{prod.SelectedItem.ToString()}'");
+            DataTable dt = StaticMethods.getTable($"SELECT A.[Count] FROM [Stocks] A INNER JOIN [Products] B ON A.[ProductID] = B.[ID] WHERE B.Name LIKE '{prod.SelectedItem.ToString()}'");
             foreach (DataRow row in dt.Rows)
             {
                 countStocks.Text = row[0].ToString();
             }
+        }
+
+        private void tabControl1_Click(object sender, EventArgs e)
+        {
+            getData();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < checkedListBox1.Items.Count; ++i)
+            {
+                checkedListBox1.SetItemChecked(i, true);
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < checkedListBox1.Items.Count; ++i)
+            {
+                checkedListBox1.SetItemChecked(i, false);
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            button2_Click(sender, e);
+            StaticMethods.setTables(listTables);
+            getData();
+            button1_Click(sender, e);
+            StaticMethods.setTables(listTables);
         }
     }
 }

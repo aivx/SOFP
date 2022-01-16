@@ -13,26 +13,43 @@ namespace SOFP
     static internal class Connection
     {
         public static SqlConnection sqlConnection = new SqlConnection();
-        public static bool newconnect(string source, string login, string password)
+        public static bool newConnect(string source, string login, string password)
         {
-            string ConnectionString = String.Format(
-                "Data Source={0}; User ID={1}; Password={2};",
-                source, login, password);
-            if(login == "")
+
+            string ConnectionString = $"Persist Security Info=False;User ID={login};Password={password};Server={source}";
+            if (login == "")
             {
-                ConnectionString = String.Format(
-                "Data Source={0}; Integrated Security=True",
-                source);
+                ConnectionString = $"Data Source={source}; Integrated Security=True";
             }
             sqlConnection = new SqlConnection(ConnectionString);
-            try { 
+            try
+            {
                 sqlConnection.Open();
-            } catch { 
+                StatusUpdate.setStatus("Подключено");
+            }
+            catch
+            {
                 sqlConnection.Close();
+                StatusUpdate.setStatus("Не удалось подключиться к серверу");
                 MessageBox.Show("Ошибка подключения!");
                 return false;
             }
             return true;
+        }
+        public static void closeConnections()
+        {
+            if (sqlConnection.State == ConnectionState.Open)
+            {
+                try
+                {
+                    sqlConnection.Close();
+                    StatusUpdate.setStatus("Соединение успешно закрыто");
+                }
+                catch (SqlException odbcEx)
+                {
+                    StatusUpdate.setStatus("Последняя операция выполнена с ошибкой");
+                }
+            }
         }
     }
 }

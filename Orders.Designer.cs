@@ -55,18 +55,6 @@ namespace SOFP
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStrip6 = new System.Windows.Forms.ToolStrip();
-            this.toolStrip4 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.cust = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripLabel9 = new System.Windows.Forms.ToolStripLabel();
-            this.prod = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripLabel10 = new System.Windows.Forms.ToolStripLabel();
-            this.countStocks = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripLabel19 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripLabel20 = new System.Windows.Forms.ToolStripLabel();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.FName = new System.Windows.Forms.ToolStripTextBox();
             this.MName = new System.Windows.Forms.ToolStripTextBox();
@@ -80,9 +68,25 @@ namespace SOFP
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel18 = new System.Windows.Forms.ToolStripLabel();
             this.phone = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStrip4 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.cust = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabel9 = new System.Windows.Forms.ToolStripLabel();
+            this.prod = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabel10 = new System.Windows.Forms.ToolStripLabel();
+            this.countStocks = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripLabel19 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripLabel20 = new System.Windows.Forms.ToolStripLabel();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -94,6 +98,7 @@ namespace SOFP
             this.tabPage2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // contextMenuStrip1
@@ -121,6 +126,7 @@ namespace SOFP
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1169, 428);
             this.tabControl1.TabIndex = 2;
+            this.tabControl1.Click += new System.EventHandler(this.tabControl1_Click);
             // 
             // tabPage1
             // 
@@ -338,6 +344,80 @@ namespace SOFP
             this.toolStrip6.TabIndex = 14;
             this.toolStrip6.Text = "toolStrip6";
             // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(63, 22);
+            this.toolStripLabel1.Text = "Заказчик: ";
+            // 
+            // FName
+            // 
+            this.FName.Name = "FName";
+            this.FName.ReadOnly = true;
+            this.FName.Size = new System.Drawing.Size(100, 25);
+            // 
+            // MName
+            // 
+            this.MName.Name = "MName";
+            this.MName.ReadOnly = true;
+            this.MName.Size = new System.Drawing.Size(100, 25);
+            // 
+            // LName
+            // 
+            this.LName.Name = "LName";
+            this.LName.ReadOnly = true;
+            this.LName.Size = new System.Drawing.Size(100, 25);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripLabel17
+            // 
+            this.toolStripLabel17.Name = "toolStripLabel17";
+            this.toolStripLabel17.Size = new System.Drawing.Size(70, 22);
+            this.toolStripLabel17.Text = "Псевдоним";
+            // 
+            // Nname
+            // 
+            this.Nname.Name = "Nname";
+            this.Nname.ReadOnly = true;
+            this.Nname.Size = new System.Drawing.Size(100, 25);
+            // 
+            // toolStripSeparator11
+            // 
+            this.toolStripSeparator11.Name = "toolStripSeparator11";
+            this.toolStripSeparator11.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripLabel2
+            // 
+            this.toolStripLabel2.Name = "toolStripLabel2";
+            this.toolStripLabel2.Size = new System.Drawing.Size(40, 22);
+            this.toolStripLabel2.Text = "Адрес";
+            // 
+            // address
+            // 
+            this.address.Name = "address";
+            this.address.Size = new System.Drawing.Size(100, 25);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripLabel18
+            // 
+            this.toolStripLabel18.Name = "toolStripLabel18";
+            this.toolStripLabel18.Size = new System.Drawing.Size(55, 22);
+            this.toolStripLabel18.Text = "Телефон";
+            // 
+            // phone
+            // 
+            this.phone.Name = "phone";
+            this.phone.ReadOnly = true;
+            this.phone.Size = new System.Drawing.Size(100, 25);
+            // 
             // toolStrip4
             // 
             this.toolStrip4.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
@@ -430,86 +510,13 @@ namespace SOFP
             this.tabPage2.Text = "Настройки отображения таблицы";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // toolStripLabel1
-            // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(63, 22);
-            this.toolStripLabel1.Text = "Заказчик: ";
-            // 
-            // FName
-            // 
-            this.FName.Name = "FName";
-            this.FName.ReadOnly = true;
-            this.FName.Size = new System.Drawing.Size(100, 25);
-            // 
-            // MName
-            // 
-            this.MName.Name = "MName";
-            this.MName.ReadOnly = true;
-            this.MName.Size = new System.Drawing.Size(100, 25);
-            // 
-            // LName
-            // 
-            this.LName.Name = "LName";
-            this.LName.ReadOnly = true;
-            this.LName.Size = new System.Drawing.Size(100, 25);
-            // 
-            // toolStripSeparator10
-            // 
-            this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripLabel17
-            // 
-            this.toolStripLabel17.Name = "toolStripLabel17";
-            this.toolStripLabel17.Size = new System.Drawing.Size(70, 22);
-            this.toolStripLabel17.Text = "Псевдоним";
-            // 
-            // Nname
-            // 
-            this.Nname.Name = "Nname";
-            this.Nname.ReadOnly = true;
-            this.Nname.Size = new System.Drawing.Size(100, 25);
-            // 
-            // toolStripSeparator11
-            // 
-            this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripLabel2
-            // 
-            this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(40, 22);
-            this.toolStripLabel2.Text = "Адрес";
-            // 
-            // address
-            // 
-            this.address.Name = "address";
-            this.address.Size = new System.Drawing.Size(100, 25);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripLabel18
-            // 
-            this.toolStripLabel18.Name = "toolStripLabel18";
-            this.toolStripLabel18.Size = new System.Drawing.Size(55, 22);
-            this.toolStripLabel18.Text = "Телефон";
-            // 
-            // phone
-            // 
-            this.phone.Name = "phone";
-            this.phone.ReadOnly = true;
-            this.phone.Size = new System.Drawing.Size(100, 25);
-            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 856F));
             this.tableLayoutPanel1.Controls.Add(this.groupBox1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(4, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -541,6 +548,47 @@ namespace SOFP
             this.checkedListBox1.Size = new System.Drawing.Size(281, 366);
             this.checkedListBox1.TabIndex = 1;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.button3);
+            this.panel1.Controls.Add(this.button2);
+            this.panel1.Controls.Add(this.button1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(300, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(850, 388);
+            this.panel1.TabIndex = 3;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(24, 100);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(144, 23);
+            this.button3.TabIndex = 2;
+            this.button3.Text = "Восстановить порядок";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(23, 59);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(116, 23);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "Отключить все";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(23, 19);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(116, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Активировать все";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Orders
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -550,7 +598,7 @@ namespace SOFP
             this.Controls.Add(this.statusStrip1);
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "Orders";
-            this.Text = "Ways";
+            this.Text = "Таблица сделок";
             this.Load += new System.EventHandler(this.Drivers_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -568,6 +616,7 @@ namespace SOFP
             this.tabPage2.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -626,5 +675,9 @@ namespace SOFP
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
     }
 }

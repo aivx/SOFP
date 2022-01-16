@@ -193,6 +193,7 @@ namespace SOFP
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "NewConnect";
             this.Text = "Подключение";
+            this.Load += new System.EventHandler(this.NewConnect_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
