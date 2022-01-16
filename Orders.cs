@@ -51,16 +51,13 @@ namespace SOFP
 
         void getData()
         {
-            try
-            {
-                cursor = dataGridView1.CurrentCell.RowIndex;
-            }
-            catch { }
+            try { cursor = dataGridView1.CurrentCell.RowIndex; } catch { }
             table = StaticMethods.getTable($"SELECT {StaticMethods.setTables(listTables)} FROM {select_str}");
             BindingSource bs = new BindingSource();
             bs.DataSource = table;
             dataGridView1.DataSource = bs;
             bindingNavigator1.BindingSource = bs;
+            try { dataGridView1.CurrentCell = dataGridView1[0, cursor]; } catch { }
             cust.Items.Clear();
             prod.Items.Clear();
             DataTable dt = StaticMethods.getTable($"SELECT [Nname] FROM [Customers]");
@@ -73,7 +70,6 @@ namespace SOFP
             {
                 prod.Items.Add(row[0].ToString());
             }
-            dataGridView1.CurrentCell = dataGridView1[0, cursor];
         }
         private void Drivers_Load(object sender, EventArgs e)
         {

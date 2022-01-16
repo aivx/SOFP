@@ -29,6 +29,7 @@ namespace SOFP
 
         private void NewConnect_Load(object sender, EventArgs e)
         {
+            this.BackColor = System.Drawing.Color.Green;
             Connection.closeConnections();
         }
     }

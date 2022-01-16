@@ -1,11 +1,14 @@
 USE [master]
 GO
 
+DROP DATABASE SOFP4
 GO
+
+USE [master]
+GO
+
 IF DB_ID('SOFP4') IS NULL
 	CREATE DATABASE SOFP4
-	-- настройка сортировки
-	COLLATE Cyrillic_General_CI_AS
 ELSE
 	PRINT 'SOFP4 ALREADY EXISTS!!!'
 GO
@@ -13,33 +16,92 @@ GO
 USE [SOFP4]
 GO
 
-CREATE TABLE Customers(							-- Таблица покупателей
-	[ID] int NOT NULL IDENTITY,					-- Идентификатор
-	[FName] nvarchar(20) NULL,					-- Имя
-	[MName] nvarchar(20) NULL,					-- Фамилия
-	[LName] nvarchar(20) NULL,					-- Отчество
-	[Nname] nvarchar(20) NULL,					-- Контактное лицо (nickname)
-	[Address] nvarchar(50) NULL,				-- Адрес
-	[Phone] char(13) NULL						-- Номер телефона
-)
-GO
+IF OBJECT_ID(N'dbo.Customers', N'U') IS NULL
+	BEGIN
+		CREATE TABLE Customers(					-- Таблица покупателей
+			[ID] int NOT NULL IDENTITY,			-- Идентификатор
+			[FName] nvarchar(20) NOT NULL,		-- Имя
+			[MName] nvarchar(20) NOT NULL,		-- Фамилия
+			[LName] nvarchar(20) NOT NULL,		-- Отчество
+			[Nname] nvarchar(20) NOT NULL,		-- Контактное лицо (nickname)
+			[Address] nvarchar(50) NOT NULL,	-- Адрес
+			[Phone] char(13) NOT NULL			-- Номер телефона
+		)
+	END
+ELSE
+	PRINT 'ERROR! Таблица Customers уже существует!'
+
+IF OBJECT_ID(N'dbo.Orders', N'U') IS NULL
+	BEGIN
+		CREATE TABLE Orders(					-- Таблица сделок
+			[ID] int NOT NULL IDENTITY,			-- Идентификатор сделки
+			[CustomerID] int NULL,				-- Идентификатор покупателя
+			[OrderDate] date DEFAULT GETDATE()	-- Дата сделки
+		)
+	END
+ELSE
+	PRINT 'ERROR! Таблица Orders уже существует!'
+
+IF OBJECT_ID(N'dbo.Products', N'U') IS NULL
+	BEGIN
+		CREATE TABLE Products(					-- Таблица товаров
+			[ID] int NOT NULL IDENTITY,			-- Идентификатор
+			[Name] nvarchar(50) NOT NULL,		-- Наименование продукта
+			[Description] nvarchar(max) NULL	-- Описание
+		)
+	END
+ELSE
+	PRINT 'ERROR! Таблица Products уже существует!'
+
+IF OBJECT_ID(N'dbo.ProductPrice', N'U') IS NULL
+	BEGIN
+		CREATE TABLE ProductPrice(					
+			[ProductID] int NOT NULL,					
+			[WPrice] money NOT NULL,					
+			[RPrice] money NOT NULL,
+		)
+	END
+ELSE
+	PRINT 'ERROR! Таблица ProductPrice уже существует!'
+
+IF OBJECT_ID(N'dbo.ProductDiscount', N'U') IS NULL
+	BEGIN
+		CREATE TABLE ProductDiscount(					
+			[ProductID] int NOT NULL,						
+			[Percentage] tinyint NOT NULL,			
+			[From] int NOT NULL,						
+			[To] int NOT NULL
+		)
+	END
+ELSE
+	PRINT 'ERROR! Таблица ProductDiscount уже существует!'
+
+IF OBJECT_ID(N'dbo.OrderDetails', N'U') IS NULL
+	BEGIN
+		CREATE TABLE OrderDetails(				-- Таблица информации о сделках
+			[OrderID] int NOT NULL,				-- Идентификатор сделки
+			[ProductID] int NULL,
+			[Count] int DEFAULT 0,				-- Количество товара
+			[Price] money NULL
+		)
+	END
+ELSE
+	PRINT 'ERROR! Таблица OrderDetails уже существует!'
+
+IF OBJECT_ID(N'dbo.Stocks', N'U') IS NULL
+	BEGIN
+		CREATE TABLE Stocks
+		(
+			[ProductID] int NOT NULL,
+			[Count] int DEFAULT 0
+		)
+	END
+ELSE
+	PRINT 'ERROR! Таблица Stocks уже существует!'
 
 ALTER TABLE Customers 
 ADD
 PRIMARY KEY(ID)
-GO
-
--- ограничение на ввода номера телефона
-ALTER TABLE Customers
-ADD
-CHECK (Phone LIKE '[0-9]([0-9][0-9][0-9])[0-9][0-9][0-9][0-9][0-9][0-9][0-9]')
-GO
-
-CREATE TABLE Orders(							-- Таблица сделок
-	[ID] int NOT NULL IDENTITY,					-- Идентификатор сделки
-	[CustomerID] int NULL,						-- Идентификатор покупателя
-	[OrderDate] date DEFAULT GETDATE()			-- Дата сделки
-)
 GO
 
 ALTER TABLE Orders
@@ -47,74 +109,19 @@ ADD
 PRIMARY KEY([ID])
 GO
 
--- связываем таблицу Orders с таблицей Cuscomers
-ALTER TABLE Orders
-ADD
-FOREIGN KEY ([CustomerID]) REFERENCES Customers([ID])	
-	ON DELETE SET NULL							
-GO
-
-CREATE TABLE Products(							-- Таблица товаров
-	[ID] int NOT NULL IDENTITY,					-- Идентификатор
-	[Name] nvarchar(50) NOT NULL,				-- Наименование продукта
-	[Description] nvarchar(max) NULL			-- Описание
-)
-GO
-
 ALTER TABLE Products
 ADD
 PRIMARY KEY(ID)
 GO
 
-
-CREATE TABLE ProductPrice(					
-	[ProductID] int NOT NULL,					
-	[WPrice] money NOT NULL,					
-	[RPrice] money NOT NULL,
-)
-GO
-
 ALTER TABLE ProductPrice
 ADD
 UNIQUE(ProductID)
 GO
 
-ALTER TABLE ProductPrice
-ADD
-FOREIGN KEY ([ProductID]) REFERENCES Products([ID])	
-	ON DELETE CASCADE								
-GO
-
-CREATE TABLE ProductDiscount(					
-	[ProductID] int NOT NULL,						
-	[Percentage] tinyint NOT NULL,			
-	[From] int NOT NULL,						
-	[To] int NOT NULL
-)
-GO
-
-ALTER TABLE ProductDiscount
-ADD
-CHECK ([Percentage] >= 0 AND [Percentage] <= 100)
-GO
-
 ALTER TABLE ProductDiscount
 ADD
 UNIQUE(ProductID)
-GO
-
-ALTER TABLE ProductDiscount
-ADD
-FOREIGN KEY ([ProductID]) REFERENCES Products([ID])	
-	ON DELETE CASCADE								
-GO
-
-CREATE TABLE OrderDetails(						-- Таблица информации о сделках
-	[OrderID] int NOT NULL,						-- Идентификатор сделки
-	[ProductID] int NULL,
-	[Count] int DEFAULT 0,						-- Количество товара
-	[Price] money NULL
-)
 GO
 
 ALTER TABLE OrderDetails
@@ -122,102 +129,126 @@ ADD
 UNIQUE(OrderID)
 GO
 
-ALTER TABLE OrderDetails
-ADD
-FOREIGN KEY ([OrderID]) REFERENCES Orders([ID])	
-	ON DELETE CASCADE								
-GO
-
-ALTER TABLE OrderDetails
-ADD
-FOREIGN KEY ([ProductID]) REFERENCES Products([ID])	
-	ON DELETE SET NULL									
-GO
-
-CREATE TABLE Stocks
-(
-	[ProductID] int NOT NULL,
-	[Count] int DEFAULT 0
-)
-
-ALTER TABLE Stocks
-ADD
-CHECK (Count >= 0)
-GO
-
 ALTER TABLE Stocks
 ADD
 UNIQUE(ProductID)
 GO
 
+-- связываем таблицу Orders с таблицей Cuscomers
+ALTER TABLE Orders
+ADD
+FOREIGN KEY ([CustomerID]) REFERENCES Customers([ID])	
+	ON DELETE SET NULL	--при удалении заменять на NULL						
+GO
+-- связываем таблицу ProductPrice с таблицей Products
+ALTER TABLE ProductPrice
+ADD
+FOREIGN KEY ([ProductID]) REFERENCES Products([ID])	
+	ON DELETE CASCADE	--каскадное удаление							
+GO
+-- связываем таблицу ProductDiscount с таблицей Products
+ALTER TABLE ProductDiscount
+ADD
+FOREIGN KEY ([ProductID]) REFERENCES Products([ID])	
+	ON DELETE CASCADE	--каскадное удаление							
+GO
+-- связываем таблицу OrderDetails с таблицей Orders
+ALTER TABLE OrderDetails
+ADD
+FOREIGN KEY ([OrderID]) REFERENCES Orders([ID])	
+	ON DELETE CASCADE	--каскадное удаление								
+GO
+-- связываем таблицу OrderDetails с таблицей Products
+ALTER TABLE OrderDetails
+ADD
+FOREIGN KEY ([ProductID]) REFERENCES Products([ID])	
+	ON DELETE SET NULL	--при удалении заменять на NULL									
+GO
+-- связываем таблицу Stocks с таблицей Products
 ALTER TABLE Stocks
 ADD
 FOREIGN KEY ([ProductID]) REFERENCES Products([ID])	
-	ON DELETE CASCADE	
+	ON DELETE CASCADE	--каскадное удаление
 GO
 
-create trigger trMatchingCtocksOnInsert		-- триггер на insert в таблицу OrderDetails
-on dbo.OrderDetails for insert
-as
-	if @@ROWCOUNT = 0			-- rowcount показыает, сколько строк мы собираемся вставить
-		return
-	set nocount on				-- отключаем сообщения о числе обработанных записей, увеличивая производительность
+-- Границы для значения процентов
+ALTER TABLE ProductDiscount
+ADD
+CHECK ([Percentage] >= 0 AND [Percentage] <= 100)
+GO
+-- Количество товара на складе не должно быть меньше 0
+ALTER TABLE Stocks
+ADD
+CHECK (Count >= 0)
+GO
+-- формат ввода номера телефона
+ALTER TABLE Customers
+ADD
+CHECK (Phone LIKE '[0-9]([0-9][0-9][0-9])[0-9][0-9][0-9][0-9][0-9][0-9][0-9]')
+GO
 
-	update Stocks set Count = s.Count - i.Count	-- inserted - служебная таблица с вставляемыми данными
-	from Stocks s join (select ProductID, sum(Count) Count from inserted group by ProductID) i
-	on s.ProductID = i.ProductID
-go
+CREATE TRIGGER trMatchingCtocksOnInsert		-- триггер на insert в таблицу OrderDetails
+ON dbo.OrderDetails FOR INSERT
+AS
+	IF @@ROWCOUNT = 0			-- rowcount показыает, сколько строк мы собираемся вставить
+		RETURN
+	SET NOCOUNT ON				-- отключаем сообщения о числе обработанных записей, увеличивая производительность
+
+	UPDATE Stocks SET Count = s.Count - i.Count	-- inserted - служебная таблица с вставляемыми данными
+	FROM Stocks s join (SELECT ProductID, sum(Count) Count FROM inserted GROUP BY ProductID) i
+	ON s.ProductID = i.ProductID
+GO
 
 
-create trigger trMatchingStocksOnDelete		-- триггер на delete
-on OrderDetails for delete
-as
-	if @@ROWCOUNT = 0
-		return
-	set nocount on
+CREATE TRIGGER trMatchingStocksOnDelete		-- триггер на delete
+ON OrderDetails FOR DELETE
+AS
+	IF @@ROWCOUNT = 0
+		RETURN
+	SET NOCOUNT ON
 
-	update Stocks set Count = s.Count + d.Count	-- служебная таблица deleted хранит записи, которые будут удалены
-	from Stocks s join (select ProductID, sum(Count) Count from deleted group by ProductID) d
-	on s.ProductID = d.ProductID
-go
+	UPDATE Stocks SET Count = s.Count + d.Count	-- служебная таблица deleted хранит записи, которые будут удалены
+	FROM Stocks s join (SELECT ProductID, sum(Count) Count FROM deleted GROUP BY ProductID) d
+	ON s.ProductID = d.ProductID
+GO
 
-create trigger trMatchingStocksOnUpdate		-- триггер на update
-on OrderDetails for update
-as
-	if @@ROWCOUNT = 0
-		return
+CREATE TRIGGER trMatchingStocksOnUpdate		-- триггер на update
+ON OrderDetails FOR UPDATE
+AS
+	IF @@ROWCOUNT = 0
+		RETURN
 
-	if not UPDATE(Count)			-- если мы не обновляем поле Count, то выходим из триггера
-		return
+	IF not UPDATE(Count)			-- если мы не обновляем поле Count, то выходим из триггера
+		RETURN
 
-	set nocount on
+	SET NOCOUNT ON
 
-	update Stocks set Count = s.Count - (i.Count - d.Count)
-	from Stocks s
+	UPDATE Stocks SET Count = s.Count - (i.Count - d.Count)
+	FROM Stocks s
 	join	
-	(select ProductID, sum(Count) Count from deleted group by ProductID) d
-	on s.ProductID = d.ProductID
+	(SELECT ProductID, sum(Count) Count FROM deleted GROUP BY ProductID) d
+	ON s.ProductID = d.ProductID
 	join
-	(select ProductID, sum(Count) Count from inserted group by ProductID) i
-	on s.ProductID = i.ProductID
-go
+	(SELECT ProductID, sum(Count) Count FROM inserted GROUP BY ProductID) i
+	ON s.ProductID = i.ProductID
+GO
 
 
 create trigger trAllowDeleteProdut		-- если перед удалением записей из таблицы Products нужно проверить,
-on Products					-- можно-ли удалять, используем instead of delete
-instead of delete
-as
-	begin
+ON Products								-- можно-ли удалять, используем INSTEAD OF DELETE
+INSTEAD OF DELETE
+AS
+	BEGIN
 		-- если в OrderDetails есть хоть одна запись, отменяем удаление
-		if exists (select 1 from OrderDetails od
+		IF exists (SELECT 1 FROM OrderDetails od
 				   join deleted d
-				   on od.ProductID = d.ID)
-			raiserror('Товар не может быть удален', 10, 1)
+				   ON od.ProductID = d.ID)
+			RAISERROR('Товар не может быть удален', 10, 1)
 		-- если записей нет, выполняем удаление
-		else
-			delete Products where ID in (select ID from deleted)
-	end
-go
+		ELSE
+			DELETE Products WHERE ID in (SELECT ID FROM deleted)
+	END
+GO
 
 
 INSERT Customers
@@ -341,11 +372,52 @@ AS
 	(@OrderID, @ProductID, @Count, @Price)
 GO
 
+USE SOFP4;   
+GRANT EXECUTE ON OBJECT::add_Order
+    TO public;  
+GO
 
+CREATE PROCEDURE [add_Product]
+	@Name varchar(50) = 0,
+	@Description varchar(max) = 0,
+	@WPrice money = 0,
+	@RPrice money = 0,
+	@Percentage tinyint = 0,
+	@From int = 0,
+	@To int = 0,
+	@Count int = 0
+	 
+WITH EXECUTE AS OWNER
+AS
+	declare @ProductID int = 0
 
+	INSERT Products
+	([Name],[Description])
+	VALUES
+	(@Name, @Description)
 
+	SELECT @ProductID = MAX([ID]) FROM [Products]
 
+	INSERT ProductPrice
+	([ProductID],[WPrice],[RPrice])
+	VALUES
+	(@ProductID,@WPrice, @RPrice)			
 
+	INSERT ProductDiscount
+	([ProductID],[Percentage],[From],[To])
+	VALUES
+	(@ProductID,@Percentage, @From, @To)
+
+	INSERT Stocks
+	([ProductID],[Count])
+	VALUES
+	(@ProductID,@Count)
+GO
+
+USE SOFP4;   
+GRANT EXECUTE ON OBJECT::add_Product
+    TO public;  
+GO
 
 /******************************************/
 
@@ -443,48 +515,6 @@ EXEC [get_Order] 0
 GO
 
 
-
-CREATE PROCEDURE [add_Product]
-	@Name varchar(50) = 0,
-	@Description varchar(max) = 0,
-	@WPrice money = 0,
-	@RPrice money = 0,
-	@Percentage tinyint = 0,
-	@From int = 0,
-	@To int = 0,
-	@Count int = 0
-	 
-WITH EXECUTE AS OWNER
-AS
-	declare @ProductID int = 0
-
-	INSERT Products
-	([Name],[Description])
-	VALUES
-	(@Name, @Description)
-
-	SELECT @ProductID = MAX([ID]) FROM [Products]
-
-	INSERT ProductPrice
-	([ProductID],[WPrice],[RPrice])
-	VALUES
-	(@ProductID,@WPrice, @RPrice)			
-
-	INSERT ProductDiscount
-	([ProductID],[Percentage],[From],[To])
-	VALUES
-	(@ProductID,@Percentage, @From, @To)
-
-	INSERT Stocks
-	([ProductID],[Count])
-	VALUES
-	(@ProductID,@Count)
-
-GO
-
-EXEC [add_Product] 'test1', 'test1_описание', 10, 20, 5, 3, 20, 10
-
-GO
 
 SELECT * FROM Products
 

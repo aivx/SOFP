@@ -43,17 +43,13 @@ namespace SOFP
 
         void getData()
         {
-            try
-            {
-                cursor = dataGridView1.CurrentCell.RowIndex;
-            }
-            catch { }
+            try { cursor = dataGridView1.CurrentCell.RowIndex; } catch { }
             table = StaticMethods.getTable($"SELECT {StaticMethods.setTables(listTables)} FROM {select_str}");
             BindingSource bs = new BindingSource();
             bs.DataSource = table;
             dataGridView1.DataSource = bs;
             bindingNavigator1.BindingSource = bs;
-            dataGridView1.CurrentCell = dataGridView1[0, cursor];
+            try { dataGridView1.CurrentCell = dataGridView1[0, cursor]; } catch { }
         }
         private void Drivers_Load(object sender, EventArgs e)
         {
