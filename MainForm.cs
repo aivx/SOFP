@@ -19,11 +19,20 @@ namespace SOFP
             this.WindowState = FormWindowState.Maximized;
         }
 
+        Form nc, cu, or, pr, ul;
+
         private void ShowNewForm(object sender, EventArgs e)
         {
-            NewConnect nc = new NewConnect();
-            nc.MdiParent = this;
-            nc.Show();
+            bool IsFormOpened<TForm>() where TForm : Form
+            {
+                return Application.OpenForms.OfType<TForm>().Any();
+            }
+            if (!IsFormOpened<NewConnect>())
+            {
+                nc = new NewConnect();
+                nc.MdiParent = this;
+                nc.Show();
+            }
         }
 
         private void OpenFile(object sender, EventArgs e)
@@ -117,41 +126,91 @@ namespace SOFP
             DataUpdate.updates();
         }
 
+        private void openCustomers()
+        {
+            bool IsFormOpened<TForm>() where TForm : Form
+            {
+                return Application.OpenForms.OfType<TForm>().Any();
+            }
+            if (!IsFormOpened<Customers>())
+            {
+                cu = new Customers();
+                cu.MdiParent = this;
+                cu.Show();
+            }
+        }
+
         private void покупателиToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Customers nc = new Customers();
-            nc.MdiParent = this;
-            nc.Show();
+            openCustomers();
+            cu.WindowState = FormWindowState.Maximized;
+        }
+
+        private void openOrders()
+        {
+            bool IsFormOpened<TForm>() where TForm : Form
+            {
+                return Application.OpenForms.OfType<TForm>().Any();
+            }
+            if (!IsFormOpened<Orders>())
+            {
+                or = new Orders();
+                or.MdiParent = this;
+                or.Show();
+            }
         }
 
         private void сделкиToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Orders nc = new Orders();
-            nc.MdiParent = this;
-            nc.WindowState = FormWindowState.Maximized;
-            nc.Show();
+            openOrders();
+            or.WindowState = FormWindowState.Maximized;
+        }
+
+        private void openProducts()
+        {
+            bool IsFormOpened<TForm>() where TForm : Form
+            {
+                return Application.OpenForms.OfType<TForm>().Any();
+            }
+            if (!IsFormOpened<Products>())
+            {
+                pr = new Products();
+                pr.MdiParent = this;
+                pr.Show();
+            }
         }
 
         private void товарыToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Products nc = new Products();
-            nc.MdiParent = this;
-            nc.Show();
+            openProducts();
+            pr.WindowState = FormWindowState.Maximized;
         }
 
-        private void системаСкидокToolStripMenuItem_Click(object sender, EventArgs e)
+        private void openLoginUsers()
         {
+            bool IsFormOpened<TForm>() where TForm : Form
+            {
+                return Application.OpenForms.OfType<TForm>().Any();
+            }
+            if (!IsFormOpened<LoginUsers>())
+            {
+                pr = new LoginUsers();
+                pr.MdiParent = this;
+                pr.Show();
+            }
+        }
 
+        private void пользователиАвторизацииToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openLoginUsers();
+            pr.WindowState = FormWindowState.Maximized;
         }
 
         private void открытьВсеОкнаToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            покупателиToolStripMenuItem_Click(sender, e);
-            Orders nc = new Orders();
-            nc.MdiParent = this;
-            nc.Show();
-            товарыToolStripMenuItem_Click(sender, e);
-            системаСкидокToolStripMenuItem_Click(sender, e);
+            openCustomers();
+            openOrders();
+            openProducts();
             LayoutMdi(MdiLayout.Cascade);
         }
     }

@@ -59,6 +59,7 @@ namespace SOFP
             this.cascadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tileVerticalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tileHorizontalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.открытьВсеОкнаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.arrangeIconsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,7 +74,6 @@ namespace SOFP
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.открытьВсеОкнаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -261,7 +261,7 @@ namespace SOFP
             // 
             this.покупателиToolStripMenuItem.Name = "покупателиToolStripMenuItem";
             this.покупателиToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
-            this.покупателиToolStripMenuItem.Text = "&Пользователи авторизации";
+            this.покупателиToolStripMenuItem.Text = "&Покупатели";
             this.покупателиToolStripMenuItem.Click += new System.EventHandler(this.покупателиToolStripMenuItem_Click);
             // 
             // сделкиToolStripMenuItem
@@ -282,8 +282,8 @@ namespace SOFP
             // 
             this.системаСкидокToolStripMenuItem.Name = "системаСкидокToolStripMenuItem";
             this.системаСкидокToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
-            this.системаСкидокToolStripMenuItem.Text = "&Покупатели";
-            this.системаСкидокToolStripMenuItem.Click += new System.EventHandler(this.системаСкидокToolStripMenuItem_Click);
+            this.системаСкидокToolStripMenuItem.Text = "&Пользователи авторизации";
+            this.системаСкидокToolStripMenuItem.Click += new System.EventHandler(this.пользователиАвторизацииToolStripMenuItem_Click);
             // 
             // windowsMenu
             // 
@@ -326,6 +326,13 @@ namespace SOFP
             this.tileHorizontalToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.tileHorizontalToolStripMenuItem.Text = "С&верху вниз";
             this.tileHorizontalToolStripMenuItem.Click += new System.EventHandler(this.TileHorizontalToolStripMenuItem_Click);
+            // 
+            // открытьВсеОкнаToolStripMenuItem
+            // 
+            this.открытьВсеОкнаToolStripMenuItem.Name = "открытьВсеОкнаToolStripMenuItem";
+            this.открытьВсеОкнаToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.открытьВсеОкнаToolStripMenuItem.Text = "&Открыть все";
+            this.открытьВсеОкнаToolStripMenuItem.Click += new System.EventHandler(this.открытьВсеОкнаToolStripMenuItem_Click);
             // 
             // closeAllToolStripMenuItem
             // 
@@ -434,13 +441,6 @@ namespace SOFP
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
             this.toolStripStatusLabel.Size = new System.Drawing.Size(66, 17);
             this.toolStripStatusLabel.Text = "Состояние";
-            // 
-            // открытьВсеОкнаToolStripMenuItem
-            // 
-            this.открытьВсеОкнаToolStripMenuItem.Name = "открытьВсеОкнаToolStripMenuItem";
-            this.открытьВсеОкнаToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.открытьВсеОкнаToolStripMenuItem.Text = "&Открыть все";
-            this.открытьВсеОкнаToolStripMenuItem.Click += new System.EventHandler(this.открытьВсеОкнаToolStripMenuItem_Click);
             // 
             // MainForm
             // 

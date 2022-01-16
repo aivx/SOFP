@@ -137,6 +137,7 @@ namespace SOFP
             this.password.Name = "password";
             this.password.Size = new System.Drawing.Size(269, 23);
             this.password.TabIndex = 9;
+            this.password.Text = "1234";
             // 
             // source
             // 
