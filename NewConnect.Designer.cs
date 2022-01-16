@@ -124,6 +124,10 @@ namespace SOFP
             // 
             this.login.Dock = System.Windows.Forms.DockStyle.Fill;
             this.login.FormattingEnabled = true;
+            this.login.Items.AddRange(new object[] {
+            "user",
+            "operator",
+            "admin"});
             this.login.Location = new System.Drawing.Point(70, 3);
             this.login.Name = "login";
             this.login.Size = new System.Drawing.Size(269, 23);
@@ -143,6 +147,8 @@ namespace SOFP
             // 
             this.source.Dock = System.Windows.Forms.DockStyle.Fill;
             this.source.FormattingEnabled = true;
+            this.source.Items.AddRange(new object[] {
+            ".\\SQLEXPRESS"});
             this.source.Location = new System.Drawing.Point(70, 57);
             this.source.Name = "source";
             this.source.Size = new System.Drawing.Size(269, 23);

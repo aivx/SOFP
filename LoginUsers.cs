@@ -154,7 +154,6 @@ namespace SOFP
             }
             else
             {
-                StatusUpdate.setStatus("Последняя операция выполнена с ошибкой");
                 MessageBox.Show("Все поля должны быть заполнены");
             }
         }

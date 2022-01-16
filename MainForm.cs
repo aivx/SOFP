@@ -180,6 +180,20 @@ namespace SOFP
             }
         }
 
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bool IsFormOpened<TForm>() where TForm : Form
+            {
+                return Application.OpenForms.OfType<TForm>().Any();
+            }
+            if (!IsFormOpened<AboutBox1>())
+            {
+                AboutBox1 about = new AboutBox1();
+                about.MdiParent = this;
+                about.Show();
+            }
+        }
+
         private void товарыToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openProducts();
@@ -211,6 +225,7 @@ namespace SOFP
             openCustomers();
             openOrders();
             openProducts();
+            openLoginUsers();
             LayoutMdi(MdiLayout.Cascade);
         }
     }

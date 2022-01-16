@@ -205,6 +205,10 @@ namespace SOFP
                         StaticMethods.NonQuery($"UPDATE [Stocks] SET [Count]='{countProd.Text}' WHERE ProductID={id}");
                 }
             }
+            else
+            {
+                MessageBox.Show("Все поля должны быть заполнены");
+            }
         }
     }
 }
