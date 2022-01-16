@@ -45,11 +45,20 @@ namespace SOFP
             "INNER JOIN Orders F ON F.ID = E.OrderID " +
             "INNER JOIN Customers G ON F.[CustomerID] = G.[ID]";
 
+        DataTable table = new DataTable();
+
+        int cursor = 0;
+
         void getData()
         {
-            
+            try
+            {
+                cursor = dataGridView1.CurrentCell.RowIndex;
+            }
+            catch { }
+            table = StaticMethods.getTable($"SELECT {StaticMethods.setTables(listTables)} FROM {select_str}");
             BindingSource bs = new BindingSource();
-            bs.DataSource = StaticMethods.getTable($"SELECT {StaticMethods.setTables(listTables)} FROM {select_str}");
+            bs.DataSource = table;
             dataGridView1.DataSource = bs;
             bindingNavigator1.BindingSource = bs;
             cust.Items.Clear();
@@ -64,6 +73,7 @@ namespace SOFP
             {
                 prod.Items.Add(row[0].ToString());
             }
+            dataGridView1.CurrentCell = dataGridView1[0, cursor];
         }
         private void Drivers_Load(object sender, EventArgs e)
         {
@@ -101,38 +111,62 @@ namespace SOFP
             {
                 return;
             }
-            DataTable dt = StaticMethods.getTable($"SELECT ID FROM [Customers] WHERE [Nname] LIKE '{cust.SelectedItem.ToString()}' ");
-            string c="",p = "";
-            foreach (DataRow row in dt.Rows)
+            if (cursor != dataGridView1.CurrentCell.RowIndex)
             {
-                c = row[0].ToString();
+                table.DefaultView.Sort = string.Empty;
             }
-            dt = StaticMethods.getTable($"SELECT ID FROM [Products] WHERE [Name] LIKE '{prod.SelectedItem.ToString()}' ");
-            foreach (DataRow row in dt.Rows)
+            DataTable dt = new DataTable();
+            try
             {
-                p = row[0].ToString();
+                dt = StaticMethods.getTable($"SELECT ID FROM [Customers] WHERE [Nname] LIKE '{cust.SelectedItem.ToString()}' ");
+                string c = "", p = "";
+                foreach (DataRow row in dt.Rows)
+                {
+                    c = row[0].ToString();
+                }
+                dt = StaticMethods.getTable($"SELECT ID FROM [Products] WHERE [Name] LIKE '{prod.SelectedItem.ToString()}' ");
+                foreach (DataRow row in dt.Rows)
+                {
+                    p = row[0].ToString();
+                }
+                string ss = $"EXEC [add_Order] {c},{p},{count.Text} ";
+                StaticMethods.NonQuery(ss);
             }
-            string ss = $"EXEC [add_Order] {c},{p},{count.Text} ";
-            StaticMethods.NonQuery(ss); 
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
+            if (dataGridView1.CurrentRow == null)
+            {
+                return;
+            }
+            if (cursor != dataGridView1.CurrentCell.RowIndex)
+            {
+                table.DefaultView.Sort = string.Empty;
+            }
             List<string> idList = StaticMethods.getIDList("SELECT ID FROM [Orders]");
-
-            DataTable dt = StaticMethods.getTable(
-                $"SELECT B.[FName],B.[MName],B.[LName],B.[Nname],B.[Address],B.[Phone]" +
-                $"FROM [Orders] A INNER JOIN [Customers] B ON A.[CustomerID] = B.[ID]" +
-                $"WHERE A.ID={idList[dataGridView1.CurrentCell.RowIndex]}");
-                foreach (DataRow row in dt.Rows)
-                {
-                    FName.Text = row[0].ToString();
-                    MName.Text = row[1].ToString();
-                    LName.Text = row[2].ToString();
-                    Nname.Text = row[3].ToString();
-                    address.Text = row[4].ToString();
-                    phone.Text = row[5].ToString();
-                }
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = StaticMethods.getTable(
+                    $"SELECT B.[FName],B.[MName],B.[LName],B.[Nname],B.[Address],B.[Phone]" +
+                    $"FROM [Orders] A INNER JOIN [Customers] B ON A.[CustomerID] = B.[ID]" +
+                    $"WHERE A.ID={idList[dataGridView1.CurrentCell.RowIndex]}");
+            }
+            catch { }
+            foreach (DataRow row in dt.Rows)
+            {
+                FName.Text = row[0].ToString();
+                MName.Text = row[1].ToString();
+                LName.Text = row[2].ToString();
+                Nname.Text = row[3].ToString();
+                address.Text = row[4].ToString();
+                phone.Text = row[5].ToString();
+            }
         }
 
         private void prod_SelectedIndexChanged(object sender, EventArgs e)

@@ -19,6 +19,7 @@ namespace SOFP
                 DataSet dataset = new DataSet();
                 dataAdapter.Fill(dataset);
                 dt = dataset.Tables[0];
+                dt.DefaultView.Sort = string.Empty;
             }
             catch (SqlException odbcEx)
             {

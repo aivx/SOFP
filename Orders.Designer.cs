@@ -151,6 +151,7 @@ namespace SOFP
             this.dataGridView1.Location = new System.Drawing.Point(4, 60);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 25;
             this.dataGridView1.Size = new System.Drawing.Size(1153, 287);
             this.dataGridView1.TabIndex = 18;
@@ -399,6 +400,7 @@ namespace SOFP
             // address
             // 
             this.address.Name = "address";
+            this.address.ReadOnly = true;
             this.address.Size = new System.Drawing.Size(100, 25);
             // 
             // toolStripSeparator1
