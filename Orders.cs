@@ -14,6 +14,13 @@ namespace SOFP
             DataUpdate.GetUpdate += DataUpdate_GetUpdate;
             dataGridView1.DataError += DataGridView1_DataError;
         }
+        private void DataUpdate_GetUpdate()
+        {
+            if (!this.IsDisposed)
+            {
+                getData();
+            }
+        }
 
         private void DataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
@@ -84,14 +91,6 @@ namespace SOFP
             };
             DataUpdate.GetUpdate += DataUpdate_GetUpdate;
             getData();
-        }
-
-        private void DataUpdate_GetUpdate()
-        {
-            if (!this.IsDisposed)
-            {
-                getData();
-            }
         }
 
         private void toolStripButton2_Click_1(object sender, EventArgs e)

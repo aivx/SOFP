@@ -31,6 +31,7 @@ namespace SOFP
             {
                 nc = new NewConnect();
                 nc.MdiParent = this;
+                nc.WindowState = FormWindowState.Normal;
                 nc.Show();
             }
         }
