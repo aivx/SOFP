@@ -138,36 +138,42 @@ GO
 ALTER TABLE Orders
 ADD
 FOREIGN KEY ([CustomerID]) REFERENCES Customers([ID])	
+	ON UPDATE CASCADE
 	ON DELETE SET NULL	--при удалении заменять на NULL						
 GO
 -- связываем таблицу ProductPrice с таблицей Products
 ALTER TABLE ProductPrice
 ADD
 FOREIGN KEY ([ProductID]) REFERENCES Products([ID])	
+	ON UPDATE CASCADE
 	ON DELETE CASCADE	--каскадное удаление							
 GO
 -- связываем таблицу ProductDiscount с таблицей Products
 ALTER TABLE ProductDiscount
 ADD
 FOREIGN KEY ([ProductID]) REFERENCES Products([ID])	
+	ON UPDATE CASCADE
 	ON DELETE CASCADE	--каскадное удаление							
 GO
 -- связываем таблицу OrderDetails с таблицей Orders
 ALTER TABLE OrderDetails
 ADD
 FOREIGN KEY ([OrderID]) REFERENCES Orders([ID])	
+	ON UPDATE CASCADE
 	ON DELETE CASCADE	--каскадное удаление								
 GO
 -- связываем таблицу OrderDetails с таблицей Products
 ALTER TABLE OrderDetails
 ADD
 FOREIGN KEY ([ProductID]) REFERENCES Products([ID])	
+	ON UPDATE CASCADE
 	ON DELETE SET NULL	--при удалении заменять на NULL									
 GO
 -- связываем таблицу Stocks с таблицей Products
 ALTER TABLE Stocks
 ADD
 FOREIGN KEY ([ProductID]) REFERENCES Products([ID])	
+	ON UPDATE CASCADE
 	ON DELETE CASCADE	--каскадное удаление
 GO
 
