@@ -51,8 +51,8 @@ namespace SOFP
             this.statusBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.открытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.покупателиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.сделкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.товарыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.сделкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.системаСкидокToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowsMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.newWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,6 +74,7 @@ namespace SOFP
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.скидкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -250,8 +251,9 @@ namespace SOFP
             // 
             this.открытьToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.покупателиToolStripMenuItem,
-            this.сделкиToolStripMenuItem,
+            this.скидкиToolStripMenuItem,
             this.товарыToolStripMenuItem,
+            this.сделкиToolStripMenuItem,
             this.системаСкидокToolStripMenuItem});
             this.открытьToolStripMenuItem.Name = "открытьToolStripMenuItem";
             this.открытьToolStripMenuItem.Size = new System.Drawing.Size(114, 20);
@@ -264,19 +266,19 @@ namespace SOFP
             this.покупателиToolStripMenuItem.Text = "&Покупатели";
             this.покупателиToolStripMenuItem.Click += new System.EventHandler(this.покупателиToolStripMenuItem_Click);
             // 
-            // сделкиToolStripMenuItem
-            // 
-            this.сделкиToolStripMenuItem.Name = "сделкиToolStripMenuItem";
-            this.сделкиToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
-            this.сделкиToolStripMenuItem.Text = "&Сделки";
-            this.сделкиToolStripMenuItem.Click += new System.EventHandler(this.сделкиToolStripMenuItem_Click);
-            // 
             // товарыToolStripMenuItem
             // 
             this.товарыToolStripMenuItem.Name = "товарыToolStripMenuItem";
             this.товарыToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             this.товарыToolStripMenuItem.Text = "&Товары";
             this.товарыToolStripMenuItem.Click += new System.EventHandler(this.товарыToolStripMenuItem_Click);
+            // 
+            // сделкиToolStripMenuItem
+            // 
+            this.сделкиToolStripMenuItem.Name = "сделкиToolStripMenuItem";
+            this.сделкиToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
+            this.сделкиToolStripMenuItem.Text = "&Сделки";
+            this.сделкиToolStripMenuItem.Click += new System.EventHandler(this.сделкиToolStripMenuItem_Click);
             // 
             // системаСкидокToolStripMenuItem
             // 
@@ -359,7 +361,7 @@ namespace SOFP
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.aboutToolStripMenuItem.Text = "&О программе";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -443,6 +445,13 @@ namespace SOFP
             this.toolStripStatusLabel.Size = new System.Drawing.Size(66, 17);
             this.toolStripStatusLabel.Text = "Состояние";
             // 
+            // скидкиToolStripMenuItem
+            // 
+            this.скидкиToolStripMenuItem.Name = "скидкиToolStripMenuItem";
+            this.скидкиToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
+            this.скидкиToolStripMenuItem.Text = "&Скидки";
+            this.скидкиToolStripMenuItem.Click += new System.EventHandler(this.скидкиToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -505,7 +514,6 @@ namespace SOFP
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.ToolStripMenuItem открытьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem покупателиToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem сделкиToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem товарыToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem системаСкидокToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
@@ -513,6 +521,8 @@ namespace SOFP
         private System.Windows.Forms.ToolStripButton printPreviewToolStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem открытьВсеОкнаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem сделкиToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem скидкиToolStripMenuItem;
     }
 }
 

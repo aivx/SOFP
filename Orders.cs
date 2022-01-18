@@ -29,12 +29,12 @@ namespace SOFP
 
         List<PackageClass> listTables = new List<PackageClass>()
         {
-            new PackageClass() { Checked = false, name = "ID сделки", ValueDisplayed = "F.ID AS [ID сделки]"},
+            new PackageClass() { Checked = true, name = "ID сделки", ValueDisplayed = "F.ID AS [ID сделки]"},
             new PackageClass() { Checked = true, name = "Псевдоним покупателя", ValueDisplayed = "G.[LName] AS [Псевдоним покупателя]"},
             new PackageClass() { Checked = true, name = "Наименование товара", ValueDisplayed = "A.[Name] AS [Наименование товара]"},
             new PackageClass() { Checked = true, name = "Описание товара", ValueDisplayed = "A.[Description] AS [Описание товара]"},
             new PackageClass() { Checked = true, name = "Количество куплено", ValueDisplayed = "E.[Count] AS [Количество куплено]"},
-            new PackageClass() { Checked = true, name = "Количество на складе", ValueDisplayed = "B.[Count] AS [Количество на складе]"},
+            new PackageClass() { Checked = true, name = "Осталось на складе", ValueDisplayed = "B.[Count] AS [Количество на складе]"},
             new PackageClass() { Checked = true, name = "Cкидка", ValueDisplayed = "[Percentage] AS [Cкидка]"},
             new PackageClass() { Checked = true, name = "От", ValueDisplayed = "C.[From] AS [От]"},
             new PackageClass() { Checked = true, name = "До", ValueDisplayed = "C.[To] AS [До]"},
@@ -46,25 +46,21 @@ namespace SOFP
         string select_str =
             " Products A " +
             "INNER JOIN Stocks B ON A.ID = B.ProductID " +
-            "INNER JOIN ProductDiscount C ON A.ID = C.ProductID " +
             "INNER JOIN ProductPrice D ON A.ID = D.ProductID " +
+            "INNER JOIN Discounts C ON D.DiscountID = C.ID " +
             "INNER JOIN OrderDetails E ON A.ID = E.ProductID " +
             "INNER JOIN Orders F ON F.ID = E.OrderID " +
             "INNER JOIN Customers G ON F.[CustomerID] = G.[ID]";
 
         DataTable table = new DataTable();
 
-        int cursor = 0;
-
         void getData()
         {
-            try { cursor = dataGridView1.CurrentCell.RowIndex; } catch { }
             table = StaticMethods.getTable($"SELECT {StaticMethods.setTables(listTables)} FROM {select_str}");
             BindingSource bs = new BindingSource();
             bs.DataSource = table;
             dataGridView1.DataSource = bs;
             bindingNavigator1.BindingSource = bs;
-            try { dataGridView1.CurrentCell = dataGridView1[0, cursor]; } catch { }
             cust.Items.Clear();
             prod.Items.Clear();
             DataTable dt = StaticMethods.getTable($"SELECT [Nname] FROM [Customers]");
@@ -95,21 +91,15 @@ namespace SOFP
 
         private void toolStripButton2_Click_1(object sender, EventArgs e)
         {
-            List<string> idList = StaticMethods.getIDList("SELECT ID FROM [Orders]");
-           // int id = Convert.ToInt32(dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells[0].Value);
-            StaticMethods.NonQuery($"DELETE FROM [Orders] WHERE ID={idList[dataGridView1.CurrentCell.RowIndex]}");
+            int id = 0;
+            try { id = Convert.ToInt32(dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells[0].Value); } catch { }
+            // int id = Convert.ToInt32(dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells[0].Value);
+            StaticMethods.NonQuery($"DELETE FROM [Orders] WHERE ID={id}");
         }
 
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.CurrentRow == null)
-            {
-                return;
-            }
-            if (cursor != dataGridView1.CurrentCell.RowIndex)
-            {
-                table.DefaultView.Sort = string.Empty;
-            }
+           // if (dataGridView1.CurrentRow == null){return;}
             DataTable dt = new DataTable();
             try
             {
@@ -135,22 +125,15 @@ namespace SOFP
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            if (dataGridView1.CurrentRow == null)
-            {
-                return;
-            }
-            if (cursor != dataGridView1.CurrentCell.RowIndex)
-            {
-                table.DefaultView.Sort = string.Empty;
-            }
-            List<string> idList = StaticMethods.getIDList("SELECT ID FROM [Orders]");
+            int id = 0;
+            try { id = Convert.ToInt32(dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells[0].Value); } catch { }
             DataTable dt = new DataTable();
             try
             {
                 dt = StaticMethods.getTable(
                     $"SELECT B.[FName],B.[MName],B.[LName],B.[Nname],B.[Address],B.[Phone]" +
                     $"FROM [Orders] A INNER JOIN [Customers] B ON A.[CustomerID] = B.[ID]" +
-                    $"WHERE A.ID={idList[dataGridView1.CurrentCell.RowIndex]}");
+                    $"WHERE A.ID={id}");
             }
             catch { }
             foreach (DataRow row in dt.Rows)

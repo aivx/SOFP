@@ -21,7 +21,7 @@ namespace SOFP
         }
         List<PackageClass> listTables = new List<PackageClass>()
         {
-            new PackageClass() { Checked = false, name = "Идентификатор", ValueDisplayed = "[principal_id] AS [Идентификатор]"},
+            new PackageClass() { Checked = true, name = "Идентификатор", ValueDisplayed = "[principal_id] AS [Идентификатор]"},
             new PackageClass() { Checked = true, name = "Имя", ValueDisplayed = "[name] AS [Имя]"},
             new PackageClass() { Checked = true, name = "Тип", ValueDisplayed = "[type_desc]AS [Тип]"},
             new PackageClass() { Checked = true, name = "База данных по умолчанию", ValueDisplayed = "[default_database_name] AS [База данных по умолчанию]"},
@@ -31,21 +31,17 @@ namespace SOFP
             new PackageClass() { Checked = true, name = "Отключен", ValueDisplayed = "[is_disabled]AS [Отключен]"}
         };
 
-        string namedb = "SOFP4";
-        string select_str = $" SOFP4.sys.sql_logins ";
+        string select_str = $" {Connection.namedb}.sys.sql_logins ";
 
         DataTable table = new DataTable();
-        int cursor = 0;
 
         void getData()
         {
-            try { cursor = dataGridView1.CurrentCell.RowIndex; } catch { }
             table = StaticMethods.getTable($"SELECT {StaticMethods.setTables(listTables)} FROM {select_str}");
             BindingSource bs = new BindingSource();
             bs.DataSource = table;
             dataGridView1.DataSource = bs;
             bindingNavigator1.BindingSource = bs;
-            try { dataGridView1.CurrentCell = dataGridView1[0, cursor]; } catch { }
         }
         private void Drivers_Load(object sender, EventArgs e)
         {
@@ -72,21 +68,17 @@ namespace SOFP
 
         private void removeItem(object sender, EventArgs e)
         {
-            List<string> idList = StaticMethods.getIDList($"SELECT [Name] FROM {namedb}.sys.sql_logins");
-           // int id = Convert.ToInt32(dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells[0].Value);
+            string name = "";
+            try { name = dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells[1].Value.ToString(); } catch { }
+            // int id = Convert.ToInt32(dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells[0].Value);
             StaticMethods.NonQuery(
-                    $"USE [{namedb}]; DROP LOGIN [{idList[dataGridView1.CurrentCell.RowIndex]}]; " +
-                    $"USE [{namedb}]; DROP USER [{idList[dataGridView1.CurrentCell.RowIndex]}]");
+                    $"USE [{Connection.namedb}]; DROP LOGIN [{name}]; " +
+                    $"USE [{Connection.namedb}]; DROP USER [{name}]");
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
 
-        }
-
-        private void prod_SelectedIndexChanged(object sender, EventArgs e)
-        {         
-            
         }
 
         private void tabControl1_Click(object sender, EventArgs e)
@@ -130,20 +122,20 @@ namespace SOFP
                 }
                 else
                 {
-                    string strcmd = $"USE [{namedb}]; CREATE LOGIN [{login.Text}] WITH PASSWORD=N'{password.Text}', DEFAULT_DATABASE=[{namedb}], DEFAULT_LANGUAGE=[русский], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF; "+
-                    $"USE [{namedb}]; CREATE USER [{login.Text}] FOR LOGIN [{login.Text}] WITH DEFAULT_SCHEMA=[dbo]; ";
+                    string strcmd = $"USE [{Connection.namedb}]; CREATE LOGIN [{login.Text}] WITH PASSWORD=N'{password.Text}', DEFAULT_DATABASE=[{Connection.namedb}], DEFAULT_LANGUAGE=[русский], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF; "+
+                    $"USE [{Connection.namedb}]; CREATE USER [{login.Text}] FOR LOGIN [{login.Text}] WITH DEFAULT_SCHEMA=[dbo]; ";
                     if (getGrant.SelectedIndex == 0)
                     {
-                        strcmd += $"USE [{namedb}]; ALTER ROLE [db_datareader] ADD MEMBER [{login.Text}]; ";
+                        strcmd += $"USE [{Connection.namedb}]; ALTER ROLE [db_datareader] ADD MEMBER [{login.Text}]; ";
                     }
                     else if (getGrant.SelectedIndex == 1)
                     {
-                        strcmd += $"USE [{namedb}]; ALTER ROLE [db_datareader] ADD MEMBER [{login.Text}]; ";
-                        strcmd += $"USE [{namedb}]; ALTER ROLE [db_datawriter] ADD MEMBER [{login.Text}]; ";
+                        strcmd += $"USE [{Connection.namedb}]; ALTER ROLE [db_datareader] ADD MEMBER [{login.Text}]; ";
+                        strcmd += $"USE [{Connection.namedb}]; ALTER ROLE [db_datawriter] ADD MEMBER [{login.Text}]; ";
                     }
                     else if (getGrant.SelectedIndex == 2)
                     {
-                        strcmd += $"USE [{namedb}]; ALTER ROLE [db_accessadmin] ADD MEMBER [{login.Text}]; ";
+                        strcmd += $"USE [{Connection.namedb}]; ALTER ROLE [db_accessadmin] ADD MEMBER [{login.Text}]; ";
                     }
                     StaticMethods.NonQuery(strcmd);
                 }

@@ -19,7 +19,7 @@ namespace SOFP
             this.WindowState = FormWindowState.Maximized;
         }
 
-        Form nc, cu, or, pr, ul;
+        Form nc, cu, or, pr, ul, dc;
 
         private void ShowNewForm(object sender, EventArgs e)
         {
@@ -195,6 +195,26 @@ namespace SOFP
             }
         }
 
+        private void openDiscounts()
+        {
+            bool IsFormOpened<TForm>() where TForm : Form
+            {
+                return Application.OpenForms.OfType<TForm>().Any();
+            }
+            if (!IsFormOpened<Discounts>())
+            {
+                dc = new Discounts();
+                dc.MdiParent = this;
+                dc.Show();
+            }
+        }
+
+        private void скидкиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openDiscounts();
+           // dc.WindowState = FormWindowState.Maximized;
+        }
+
         private void товарыToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openProducts();
@@ -209,9 +229,9 @@ namespace SOFP
             }
             if (!IsFormOpened<LoginUsers>())
             {
-                pr = new LoginUsers();
-                pr.MdiParent = this;
-                pr.Show();
+                ul = new LoginUsers();
+                ul.MdiParent = this;
+                ul.Show();
             }
         }
 
@@ -226,6 +246,7 @@ namespace SOFP
             openCustomers();
             openOrders();
             openProducts();
+            openDiscounts();
             openLoginUsers();
             LayoutMdi(MdiLayout.Cascade);
         }

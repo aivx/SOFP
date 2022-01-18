@@ -32,11 +32,13 @@ namespace SOFP
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.login = new System.Windows.Forms.ComboBox();
             this.password = new System.Windows.Forms.TextBox();
+            this.database = new System.Windows.Forms.ComboBox();
             this.source = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.button1 = new System.Windows.Forms.Button();
@@ -61,7 +63,7 @@ namespace SOFP
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65.57377F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(348, 184);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(348, 227);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // tableLayoutPanel2
@@ -70,41 +72,56 @@ namespace SOFP
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.88304F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.11696F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.1462F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 74.8538F));
+            this.tableLayoutPanel2.Controls.Add(this.label5, 0, 3);
             this.tableLayoutPanel2.Controls.Add(this.label4, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.label2, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.login, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.password, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.source, 1, 2);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 51);
+            this.tableLayoutPanel2.Controls.Add(this.database, 1, 2);
+            this.tableLayoutPanel2.Controls.Add(this.source, 1, 3);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 66);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 3;
+            this.tableLayoutPanel2.RowCount = 4;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(342, 86);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(342, 114);
             this.tableLayoutPanel2.TabIndex = 0;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label5.Location = new System.Drawing.Point(3, 84);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(80, 30);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Источник";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Location = new System.Drawing.Point(3, 54);
+            this.label4.Location = new System.Drawing.Point(3, 56);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(61, 32);
+            this.label4.Size = new System.Drawing.Size(80, 28);
             this.label4.TabIndex = 5;
-            this.label4.Text = "Источник";
+            this.label4.Text = "База данных";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Location = new System.Drawing.Point(3, 27);
+            this.label2.Location = new System.Drawing.Point(3, 28);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(61, 27);
+            this.label2.Size = new System.Drawing.Size(80, 28);
             this.label2.TabIndex = 1;
             this.label2.Text = "Пароль";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -115,7 +132,7 @@ namespace SOFP
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(61, 27);
+            this.label1.Size = new System.Drawing.Size(80, 28);
             this.label1.TabIndex = 0;
             this.label1.Text = "Логин";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -128,20 +145,32 @@ namespace SOFP
             "user",
             "operator",
             "admin"});
-            this.login.Location = new System.Drawing.Point(70, 3);
+            this.login.Location = new System.Drawing.Point(89, 3);
             this.login.Name = "login";
-            this.login.Size = new System.Drawing.Size(269, 23);
+            this.login.Size = new System.Drawing.Size(250, 23);
             this.login.TabIndex = 6;
             this.login.Text = "admin";
             // 
             // password
             // 
             this.password.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.password.Location = new System.Drawing.Point(70, 30);
+            this.password.Location = new System.Drawing.Point(89, 31);
             this.password.Name = "password";
-            this.password.Size = new System.Drawing.Size(269, 23);
+            this.password.Size = new System.Drawing.Size(250, 23);
             this.password.TabIndex = 9;
             this.password.Text = "1234";
+            // 
+            // database
+            // 
+            this.database.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.database.FormattingEnabled = true;
+            this.database.Items.AddRange(new object[] {
+            "SOFP5"});
+            this.database.Location = new System.Drawing.Point(89, 59);
+            this.database.Name = "database";
+            this.database.Size = new System.Drawing.Size(250, 23);
+            this.database.TabIndex = 10;
+            this.database.Text = "SOFP5";
             // 
             // source
             // 
@@ -149,10 +178,10 @@ namespace SOFP
             this.source.FormattingEnabled = true;
             this.source.Items.AddRange(new object[] {
             ".\\SQLEXPRESS"});
-            this.source.Location = new System.Drawing.Point(70, 57);
+            this.source.Location = new System.Drawing.Point(89, 87);
             this.source.Name = "source";
-            this.source.Size = new System.Drawing.Size(269, 23);
-            this.source.TabIndex = 10;
+            this.source.Size = new System.Drawing.Size(250, 23);
+            this.source.TabIndex = 12;
             this.source.Text = ".\\SQLEXPRESS";
             // 
             // tableLayoutPanel3
@@ -162,7 +191,7 @@ namespace SOFP
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 38.0117F));
             this.tableLayoutPanel3.Controls.Add(this.button1, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 143);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 186);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -187,7 +216,7 @@ namespace SOFP
             this.label3.Font = new System.Drawing.Font("Yu Gothic UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label3.Location = new System.Drawing.Point(3, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(342, 48);
+            this.label3.Size = new System.Drawing.Size(342, 63);
             this.label3.TabIndex = 2;
             this.label3.Text = "Авторизация";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -197,7 +226,7 @@ namespace SOFP
             this.AcceptButton = this.button1;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(348, 184);
+            this.ClientSize = new System.Drawing.Size(348, 227);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "NewConnect";
@@ -224,6 +253,8 @@ namespace SOFP
         private Label label4;
         private ComboBox login;
         private TextBox password;
+        private ComboBox database;
+        private Label label5;
         private ComboBox source;
     }
 }

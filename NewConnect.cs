@@ -20,11 +20,10 @@ namespace SOFP
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (Connection.newConnect(source.Text, login.Text, password.Text))
-            {
-                this.Close();
-                DataUpdate.updates();
-            }
+            Connection.newConnect(source.Text, database.Text, login.Text, password.Text);
+            MessageConnections ms = new MessageConnections();
+            ms.Show();
+            this.Close();
         }
 
         private void NewConnect_Load(object sender, EventArgs e)

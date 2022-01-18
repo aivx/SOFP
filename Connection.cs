@@ -12,14 +12,26 @@ namespace SOFP
 {
     static internal class Connection
     {
+        public static string source { get; private set; }
+        public static string namedb { get; private set; }
+        public static string login { get; private set; }
+        public static string password { get; private set; }
         public static SqlConnection sqlConnection = new SqlConnection();
-        public static bool newConnect(string source, string login, string password)
-        {
 
-            string ConnectionString = $"Persist Security Info=False;User ID={login};Password={password};Server={source}";
+        public static void newConnect(string s, string db, string l, string p)
+        {
+            source = s;
+            namedb = db;
+            login = l;
+            password = p;
+        }
+
+        public static bool openConnections()
+        {
+            string ConnectionString = $"Persist Security Info=False;User ID={login};Password={password};Initial Catalog={namedb};Server={source}";
             if (login == "")
             {
-                ConnectionString = $"Data Source={source}; Integrated Security=True";
+                ConnectionString = $"Initial Catalog={namedb};Data Source={source}; Integrated Security=True";
             }
             sqlConnection = new SqlConnection(ConnectionString);
             try
